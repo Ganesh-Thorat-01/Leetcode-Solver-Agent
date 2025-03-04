@@ -1,0 +1,16 @@
+langgraph==0.2.74
+langchain
+langchain-openai
+webdriver-manager
+python-dotenv
+undetected-chromedriver==3.5.3
+selenium==4.9.1
+psutil==5.9.5
+chromedriver-autoinstaller
+selenium-stealth
+IPython
+langsmith
+pyperclip
+flask
+gunicorn
+markdown2
