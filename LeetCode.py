@@ -139,8 +139,8 @@ class LeetCodeSessionManager:
         try:
             self.driver.get("https://leetcode.com/problemset/all/")
             WebDriverWait(self.driver, self.max_wait).until(
-                EC.presence_of_element_located((By.XPATH, "//div[@role='rowgroup']"))
-            )
+            EC.presence_of_element_located((By.XPATH, "//span[contains(@id, 'navbar_user_avatar')]"))
+        )
             return True
         except:
             return False
