@@ -227,22 +227,28 @@ class LeetCodeSessionManager:
             #         "//button[contains(@class, 'rounded') and contains(., 'C++')]"))
             # )
             # lang_button.click()
+            editor = WebDriverWait(self.driver, 15).until(
+                EC.presence_of_element_located((By.CLASS_NAME, "inputarea"))
+            )
+            self.driver.execute_script("arguments[0].click();", editor)
+            
 
-            lang_button = WebDriverWait(self.driver, 15).until(
-                EC.presence_of_element_located((By.XPATH, "//button[contains(@class, 'rounded') and contains(., 'C++')]"))
-            )
-            self.driver.execute_script("arguments[0].click();", lang_button)
-            
-            # Wait for dropdown to appear
-            WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, 
-                    "div[class*='p-2 rounded-lg']"))
-            )
-            
-            # Find and click Python3 option
-            python3_option = WebDriverWait(self.driver, 10).until(
+            # Clear existing code
+            editor.send_keys(Keys.CONTROL, "a")
+            editor.send_keys(Keys.DELETE)
+
+            # Click the language dropdown button
+            dropdown_button = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, 
-                    "//div[contains(@class, 'group') and contains(., 'Python3')]"))
+                    "//div[@id='editor']//button[contains(@class, 'rounded') and contains(., 'C++')]"))
+            )
+            dropdown_button.click()
+
+            # Select Python3 from the dropdown
+            python3_option = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH,
+                    "//div[@role='dialog']"
+                    "//div[contains(@class, 'group') and .//div[text()='Python3']]"))
             )
             python3_option.click()
             
@@ -312,8 +318,9 @@ class LeetCodeSessionManager:
         """
         try:
             if self.insert_code(code):
-                test_button = WebDriverWait(self.driver, 15).until(
-                    EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Run')]"))
+                test_button = WebDriverWait(self.driver, 10).until(
+                    EC.element_to_be_clickable((By.CSS_SELECTOR, 
+                        'button[data-e2e-locator="console-run-button"]'))
                 )
                 test_button.click()
                 #check test result
